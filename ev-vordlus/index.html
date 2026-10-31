@@ -1,0 +1,384 @@
+<title>Eesti e-maasturite võrdlus</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (max 1080px), frost-blue verdict band on top, then data sections; tables scroll inside their own boxes */
+:root{
+  --bg:#f3f6f8; --surface:#ffffff; --sunk:#e7edf1; --fg:#14202a; --muted:#56656f; --line:#d3dce2;
+  --accent:#0d6a8c; --accent-soft:#d6ebf3; --ice:#8fc6dc;
+  --good:#1d7a4c; --good-soft:#dcefe4; --warn:#a35c00; --warn-soft:#f8ead3; --bad:#b0302a; --bad-soft:#f6dedc;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d151b; --surface:#141f27; --sunk:#1b2933; --fg:#e4edf2; --muted:#93a4b0; --line:#2a3a46;
+  --accent:#5fb8d9; --accent-soft:#163445; --ice:#2f6f8a;
+  --good:#5cc98f; --good-soft:#163527; --warn:#e7a74a; --warn-soft:#3a2a12; --bad:#ef7b74; --bad-soft:#3d1c1a;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d151b; --surface:#141f27; --sunk:#1b2933; --fg:#e4edf2; --muted:#93a4b0; --line:#2a3a46;
+  --accent:#5fb8d9; --accent-soft:#163445; --ice:#2f6f8a;
+  --good:#5cc98f; --good-soft:#163527; --warn:#e7a74a; --warn-soft:#3a2a12; --bad:#ef7b74; --bad-soft:#3d1c1a;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,th button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.65rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.1rem;font-weight:700}
+p{margin:0;max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+section{display:flex;flex-direction:column;gap:18px}
+.lead{color:var(--muted);font-size:1.02rem}
+
+/* hero */
+header.hero{padding-block:40px 8px;display:flex;flex-direction:column;gap:16px}
+.thermo{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:.78rem;padding:4px 10px;border-radius:999px;background:var(--sunk);color:var(--fg);border:1px solid var(--line)}
+.chip.cold{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+
+/* verdict */
+.verdicts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.v{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.v.top{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.v .rank{font-family:var(--mono);font-size:.75rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.v .price{font-family:var(--mono);font-size:1.15rem;font-weight:500}
+.v .price small{font-size:.75rem;color:var(--muted);font-weight:400}
+.v ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.92rem}
+.v .minus{color:var(--muted)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.7rem;padding:2px 7px;border-radius:4px;margin-right:4px}
+.tag.g{background:var(--good-soft);color:var(--good)}.tag.w{background:var(--warn-soft);color:var(--warn)}.tag.b{background:var(--bad-soft);color:var(--bad)}
+
+/* tables */
+.tbox{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.9rem}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+thead th{background:var(--sunk);font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
+th button{all:unset;cursor:pointer}
+th button::after{content:" ↕";opacity:.45}
+th[aria-sort="ascending"] button::after{content:" ↑";opacity:1}
+th[aria-sort="descending"] button::after{content:" ↓";opacity:1}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td .sub{display:block;color:var(--muted);font-size:.78rem}
+tr.group td{background:var(--bg);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.src{font-size:.78rem}
+.note{font-size:.85rem;color:var(--muted)}
+.callout{background:var(--warn-soft);color:var(--fg);border-radius:8px;padding:12px 14px;font-size:.9rem}
+.callout b{color:var(--warn)}
+
+/* range chart */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.row{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:12px;align-items:center}
+.row .lbl{font-size:.88rem;min-width:0}
+.row .lbl small{display:block;color:var(--muted);font-size:.74rem}
+.track{position:relative;height:26px;background:repeating-linear-gradient(90deg,transparent 0 calc(20% - 1px),var(--line) calc(20% - 1px) 20%);border-radius:4px}
+.bar{position:absolute;top:4px;bottom:4px;border-radius:3px;background:linear-gradient(90deg,var(--ice),var(--accent))}
+.bar.meas{background:var(--accent)}
+.bar span{position:absolute;left:calc(100% + 6px);top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:.76rem;white-space:nowrap;color:var(--fg)}
+.axis{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:12px}
+.axis .ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.mini h3{font-size:1rem}
+.mini .row{grid-template-columns:110px 1fr}
+.mini .axis{grid-template-columns:110px 1fr}
+.bar.best{background:var(--good)}
+
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.tip{border-top:2px solid var(--accent);padding-top:10px;display:flex;flex-direction:column;gap:6px}
+.tip p{font-size:.92rem}
+.trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.trip{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.trip .km{font-family:var(--mono);color:var(--muted);font-size:.8rem}
+ol.srcs{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:.85rem;columns:1}
+@media (min-width:800px){ol.srcs{display:block;columns:2;column-gap:32px}ol.srcs li{margin-bottom:4px;break-inside:avoid}}
+footer{color:var(--muted);font-size:.82rem;border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:520px){.row,.axis{grid-template-columns:100px 1fr}.mini .row,.mini .axis{grid-template-columns:90px 1fr}}
+@media (prefers-reduced-motion:no-preference){.bar{transition:width .4s ease}}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">Ostjale · oktoober 2026 · hinnad Eesti ametlikelt müüjatelt</span>
+  <h1>Milline elektrimaastur peab Eesti talvele kõige paremini vastu?</h1>
+  <p class="lead">Tesla Model Y, Volvo EX60, BMW iX3 ja nende otsesed konkurendid. Hinnad on Eesti maaletoojate ja esinduste lehtedelt. Testitulemused on Euroopa sõltumatutelt testijatelt (ADAC, NAF, What Car?, TÜV). Talvise ulatuse hinnang eeldab −10 °C ja maanteesõitu.</p>
+  <div class="thermo">
+    <span class="chip cold">−10 °C maantee 90–110 km/h</span>
+    <span class="chip cold">NAF talvetest: keskmine kadu −38%</span>
+    <span class="chip">ADAC 0 °C: tarbimine +57% üle WLTP</span>
+    <span class="chip">Eesti laadijad valdavalt 50–150 kW</span>
+  </div>
+</header>
+
+<section aria-labelledby="h-verdict">
+  <div><span class="eyebrow">Kokkuvõte</span><h2 id="h-verdict">Soovitus Eesti talveks</h2></div>
+  <div class="verdicts">
+    <article class="v top">
+      <span class="rank">1 · parim talvine ulatus</span>
+      <h3>BMW iX3 50 xDrive</h3>
+      <div class="price">71 600 € <small>alates · Inchcape BMW</small></div>
+      <ul>
+        <li>Kõige säästlikum: ADAC 18,3 kWh/100 km</li>
+        <li>ADAC ulatus 669 km. NAF-i suvetestis 781 km (WLTP-st rohkem)</li>
+        <li>Talvel hinnanguliselt 430–490 km</li>
+        <li class="minus">Laadimine 25 min (ADAC). Talvetestis pole veel osalenud.</li>
+      </ul>
+    </article>
+    <article class="v">
+      <span class="rank">2 · ADAC testi võitja</span>
+      <h3>Mercedes GLC 400 4MATIC</h3>
+      <div class="price">76 880 € <small>baashind · tutvustusmudel 80 190 €</small></div>
+      <ul>
+        <li>ADAC üldhinne 1,8, võrdlustesti parim</li>
+        <li>Vaikne ja mugav. NAF-is ületas WLTP-d 3,4%.</li>
+        <li>Talvel hinnanguliselt 370–420 km</li>
+        <li class="minus">Kõige kallim. Sõiduulatus jääb iX3-le alla.</li>
+      </ul>
+    </article>
+    <article class="v">
+      <span class="rank">3 · kiireim laadija</span>
+      <h3>Volvo EX60</h3>
+      <div class="price">65 250 € <small>P6 · P10 AWD 68 350 € · P12 AWD 74 550 €</small></div>
+      <ul>
+        <li>10→80% 17 minutiga (ADAC, testi parim)</li>
+        <li>Kõige mugavam vedrustus, soojuspump standardis</li>
+        <li>P12 talvel ~430–480 km, P10 ~340–390 km</li>
+        <li class="minus">P10 ulatus ADAC-is 508 km. Sõltumatut talvetesti pole veel.</li>
+      </ul>
+    </article>
+    <article class="v">
+      <span class="rank">4 · parim hind</span>
+      <h3>Tesla Model Y LR AWD</h3>
+      <div class="price">~51 900 € <small>Tallinna edasimüüja · Tesla ametlik EE hind kontrollimata</small></div>
+      <ul>
+        <li>Talvel tõestatult säästlik: NAF 359 km kuni −31 °C</li>
+        <li>ADAC 0 °C kiirteel madalaim tarbimine (22,2 kWh)</li>
+        <li class="minus">ADAC võrdluses viimane. Laadimine 35 min.</li>
+        <li class="minus">TÜV 2026: suurim puuduste osakaal (vedrustus, pidurid)</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section aria-labelledby="h-table">
+  <div><span class="eyebrow">Põhitabel · klõpsa veerupealkirjal sortimiseks</span><h2 id="h-table">Hinnad ja põhinäitajad</h2></div>
+  <div class="tbox">
+    <table id="cmp">
+      <thead><tr>
+        <th scope="col"><button data-k="0">Auto</button></th>
+        <th scope="col" aria-sort="ascending"><button data-k="1" data-num>EE hind alates</button></th>
+        <th scope="col"><button data-k="2" data-num>Aku, kWh</button></th>
+        <th scope="col"><button data-k="3" data-num>WLTP, km</button></th>
+        <th scope="col"><button data-k="4" data-num>Talvel*, km</button></th>
+        <th scope="col"><button data-k="5" data-num>10→80%</button></th>
+        <th scope="col"><button data-k="6">Pinge</button></th>
+        <th scope="col">Hinna allikas</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Kia EV6<span class="sub">63 kWh RWD baas · AWD 84 kWh kallim</span></td><td class="n" data-v="41790">41 790 €<span class="sub">kampaania, tavahind 47 790 €</span></td><td class="n" data-v="63">63</td><td class="n" data-v="450">~450</td><td class="n" data-v="230">210–250</td><td class="n" data-v="18">~18 min</td><td>800 V</td><td class="src"><a href="https://www.kia.ee/models/e6_pe/prices">kia.ee</a></td></tr>
+        <tr><td>Hyundai Ioniq 5<span class="sub">63 kWh RWD baas</span></td><td class="n" data-v="42999">42 999 €</td><td class="n" data-v="63">63</td><td class="n" data-v="440">~440</td><td class="n" data-v="220">200–240</td><td class="n" data-v="18">~18 min</td><td>800 V</td><td class="src"><a href="https://www.hyundai.ee/mudelid/ioniq-5/">hyundai.ee</a></td></tr>
+        <tr><td>Tesla Model Y Long Range AWD</td><td class="n" data-v="51900">~51 900 €<span class="sub">+ reg.-tasu ~384 €</span></td><td class="n" data-v="80">~80</td><td class="n" data-v="600">~600</td><td class="n" data-v="350">330–370</td><td class="n" data-v="35">35 min</td><td>400 V</td><td class="src">Tallinna edasimüüja kuulutus · <a href="https://www.tesla.com/et_ee/findus/list/stores/Estonia">Tesla Eesti</a></td></tr>
+        <tr><td>Škoda Enyaq 85x Selection</td><td class="n" data-v="52860">52 860 €<span class="sub">SportLine 57 380 €</span></td><td class="n" data-v="77">77</td><td class="n" data-v="550">~550</td><td class="n" data-v="310">290–330</td><td class="n" data-v="28">~28 min</td><td>400 V</td><td class="src"><a href="https://www.skoda.ee/autod/enyaq/enyaq/uus-enyaq-hinnakiri?_preservelanguage=1">skoda.ee</a> (20.07.2026)</td></tr>
+        <tr><td>Polestar 4 LR Single Motor<span class="sub">Dual Motor kallim</span></td><td class="n" data-v="55850">55 850 €<span class="sub">soodustusega, ilma 59 850 €</span></td><td class="n" data-v="100">100</td><td class="n" data-v="620">620</td><td class="n" data-v="335">310–360</td><td class="n" data-v="30">~30 min</td><td>400 V</td><td class="src"><a href="https://infoauto.polestarimporter.com/stock-cars">Info-Auto (Polestar)</a></td></tr>
+        <tr><td>Audi Q6 e-tron<span class="sub">baas tagavedu · quattro laos 80 050 €+</span></td><td class="n" data-v="63700">63 700 €<span class="sub">Sportback 67 800 €</span></td><td class="n" data-v="95">~95</td><td class="n" data-v="610">~610</td><td class="n" data-v="375">350–400</td><td class="n" data-v="21">~21 min</td><td>800 V</td><td class="src"><a href="https://www.audi.ee/ee/web/et/tools/layer/mudelite_hinnakirjad.html">audi.ee hinnakiri</a></td></tr>
+        <tr><td>Volvo EX60 P6<span class="sub">tagavedu</span></td><td class="n" data-v="65250">65 250 €</td><td class="n" data-v="80">~80</td><td class="n" data-v="620">~620</td><td class="n" data-v="330">310–350</td><td class="n" data-v="18">~18 min</td><td>800 V</td><td class="src"><a href="https://www.volvocars.com/et-ee/cars/ex60-electric/specifications/">volvocars.com/et-ee</a></td></tr>
+        <tr><td>Volvo EX60 P10 AWD</td><td class="n" data-v="68350">68 350 €<span class="sub">Ultra varustus ~+7 000 €</span></td><td class="n" data-v="91">~91</td><td class="n" data-v="660">~660</td><td class="n" data-v="365">340–390</td><td class="n" data-v="17">17 min</td><td>800 V</td><td class="src"><a href="https://www.volvocars.com/et-ee/cars/ex60-electric/specifications/">volvocars.com/et-ee</a></td></tr>
+        <tr><td>BMW iX3 50 xDrive</td><td class="n" data-v="71600">71 600 €</td><td class="n" data-v="108">~108</td><td class="n" data-v="805">675–805</td><td class="n" data-v="460">430–490</td><td class="n" data-v="25">25 min</td><td>800 V</td><td class="src"><a href="https://specialbmw.inchcape.ee/uus-bmw-ix3/">Inchcape BMW</a> · <a href="https://www.bmw.ee/et/all-models/X-mudelid/ix3/bmw-ix3.html">bmw.ee</a></td></tr>
+        <tr><td>Volvo EX60 P12 AWD</td><td class="n" data-v="74550">74 550 €</td><td class="n" data-v="112">~112</td><td class="n" data-v="810">~810</td><td class="n" data-v="455">430–480</td><td class="n" data-v="19">~19 min</td><td>800 V</td><td class="src"><a href="https://www.volvocars.com/et-ee/cars/ex60-electric/specifications/">volvocars.com/et-ee</a></td></tr>
+        <tr><td>Mercedes GLC 400 4MATIC EQ</td><td class="n" data-v="76880">76 880 €<span class="sub">tutvustusmudel 80 190 €</span></td><td class="n" data-v="94">94,4</td><td class="n" data-v="682">kuni 682</td><td class="n" data-v="395">370–420</td><td class="n" data-v="23">23 min</td><td>800 V</td><td class="src"><a href="https://veho.ee/soiduautod/kampaaniad/electric-glc/">Veho</a> · <a href="https://www.mercedes-benz.ee/offers/glc-electric/">mercedes-benz.ee</a></td></tr>
+        <tr><td>Polestar 3<span class="sub">Eestisse saabumine ebaselge</span></td><td class="n" data-v="85000">~85 000 €</td><td class="n" data-v="107">~107</td><td class="n" data-v="600">~560–630</td><td class="n" data-v="365">340–390</td><td class="n" data-v="30">~30 min</td><td>400/800 V</td><td class="src"><a href="https://liikleja.ee/uudis/paevakajaline/polestari-esindus-tallinnas-on-avatud-tuleb-ka-polestar-3/">Liikleja</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">* Talvine ulatus on <b>hinnang</b> 100→0% sõiduks −10 °C juures maanteel, soe salong, eelsoojendatud aku. Hinnang tugineb ADAC-i, What Car?-i ja NAF-i mõõtmistele ja talvekadudele. Model Y kohta on olemas otsene mõõtmine (NAF 359 km). Laadimisajad 17–35 min on ADAC-i mõõtmised, „~“-märgiga ajad on tootja või andmebaasi andmed. Aku- ja WLTP-andmed on ligikaudsed.</p>
+  <div class="callout"><b>Tesla hind:</b> Tesla Eesti konfiguraatorist ametlikku hinda kätte ei saanud. Tabelis on Tallinna edasimüüja kuulutuse hind. Soomes on Premium AWD hind 54 990 €. Kontrolli: <a href="https://www.tesla.com/et_ee/modely/design">tesla.com/et_ee/modely/design</a>.</div>
+</section>
+
+<section aria-labelledby="h-winter">
+  <div><span class="eyebrow">Hinnang · −10 °C · maantee</span><h2 id="h-winter">Talvine sõiduulatus ühe laadimisega</h2></div>
+  <p class="lead">Riba näitab hinnangulist vahemikku 100→0%. Tavasõidus laed 80%-ni ja sõidad 10%-ni, see on umbes 70% riba pikkusest.</p>
+  <div class="chart" id="winter"></div>
+</section>
+
+<section aria-labelledby="h-adac">
+  <div><span class="eyebrow">ADAC võrdlustest · oktoober 2026 · tavaolud</span><h2 id="h-adac">Neli peamist kandidaati otse võrdluses</h2></div>
+  <p class="lead">ADAC-i üldhinded (Saksa koolihinne, väiksem on parem): Mercedes 1,8, BMW 1,9, Volvo 1,9, Tesla 2,2. Teslast oli testis Performance-versioon.</p>
+  <div class="minis">
+    <div class="chart mini"><h3>Tarbimine, kWh/100 km</h3><div id="m-cons"></div></div>
+    <div class="chart mini"><h3>Sõiduulatus, km</h3><div id="m-range"></div></div>
+    <div class="chart mini"><h3>Laadimine 10→80%, min</h3><div id="m-chg"></div></div>
+  </div>
+</section>
+
+<section aria-labelledby="h-tests">
+  <div><span class="eyebrow">Euroopa sõltumatud testid</span><h2 id="h-tests">Mida testid näitasid</h2></div>
+  <div class="tbox">
+    <table>
+      <thead><tr><th scope="col">Test</th><th scope="col">Tingimused</th><th scope="col">Tulemus</th></tr></thead>
+      <tbody>
+        <tr><td><b>NAF El Prix talv 2026</b> (Norra)</td><td>Jaanuar, −8 … −31 °C, linn, maantee ja mäekurud</td><td>Keskmine kadu WLTP-st 38%. Model Y 359 km (−40%). Volvo EX90 339 km (−44,5%). Mercedes CLA 421 km. iX3, GLC ja EX60 ei osalenud (polnud veel turul).</td></tr>
+        <tr><td><b>NAF El Prix suvi 2026</b></td><td>Suvi, segasõit</td><td>BMW iX3 <b>781 km</b> (WLTP 770, +1,4%), testi parim. Mercedes GLC 665 km (+3,4%).</td></tr>
+        <tr><td><b>ADAC talvine stresstest 2026</b></td><td>0 °C, simuleeritud kiirtee München→Berliin 582 km</td><td>Model Y Premium AWD 406 km, 22,2 kWh (madalaim tarbimine). VW ID.7 Tourer 360 km. Polestar 4 353 km. BYD Sealion 7 293 km (viimane). Ioniq 5 kaotas WLTP-st 69%.</td></tr>
+        <tr><td><b>What Car?</b> (Ühendkuningriik)</td><td>September 2026, valdavalt kiirtee, sõit kuni 10%-ni</td><td>iX3 611 km kuni 10%-ni (~681 km kokku). EX60 ~117 km vähem, Model Y LR ~153 km vähem. GLC kõige lähemal WLTP-le.</td></tr>
+        <tr><td><b>Kiirteetest</b> (iX3, GLC, EX60)</td><td>Ühtlane kiirteekiirus</td><td>iX3 544 km, GLC 449 km, EX60 419 km. EX60-l olid 22" veljed, teistel 20".</td></tr>
+        <tr><td><b>Bjørn Nyland</b> (Norra)</td><td>iX3 50 xDrive, 17 °C</td><td>90 km/h juures ~720–750 km, 120 km/h juures ~510–540 km</td></tr>
+        <tr><td><b>TÜV Report 2026</b> (Saksamaa)</td><td>2–3-aastased autod, 110 mudelit</td><td>Model Y <b>viimane</b>, 17,3% autodest olid olulised puudused (vedrustus, pidurikettad, tuled). Uusi iX3, EX60 ja GLC-d pole veel hinnatud.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section aria-labelledby="h-trips">
+  <div><span class="eyebrow">Eesti marsruudid talvel</span><h2 id="h-trips">Kas jõuab ühe laadimisega edasi-tagasi?</h2></div>
+  <div class="trips">
+    <div class="trip"><h3>Tallinn–Pärnu–Tallinn</h3><span class="km">~260 km</span><p>Kõik selle klassi autod jõuavad ka −15 °C juures.</p></div>
+    <div class="trip"><h3>Tallinn–Narva–Tallinn</h3><span class="km">~420 km</span><p>iX3 50 ja EX60 P12 jõuavad napilt. Teistel kulub ära üks lühike laadimine.</p></div>
+    <div class="trip"><h3>Tallinn–Tartu–Tallinn</h3><span class="km">~370 km</span><p>iX3 50 ja EX60 P12 jõuavad kindlalt, GLC 400 napilt. Teised laevad tagasiteel.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="h-tips">
+  <div><span class="eyebrow">Külma kliima eripärad</span><h2 id="h-tips">Mida Eesti talv muudab</h2></div>
+  <div class="tips">
+    <div class="tip"><h3>Soojuspump</h3><p>Model Y, iX3, EX60 ja GLC-l on see standardis. Audi Q6 ja teiste puhul kontrolli varustust. Ilma soojuspumbata kaotad −10 °C juures veel 10–15% ulatusest.</p></div>
+    <div class="tip"><h3>Aku eelsoojendus</h3><p>NAF-i talvetest näitas, et ilma eelsoojenduseta laeb külm aku 2–3 korda aeglasemalt. Sea laadija navigatsiooni sihiks.</p></div>
+    <div class="tip"><h3>800 V eelis on Eestis väiksem</h3><p>Eesti avalikud laadijad on enamasti 50–150 kW. 17-minutiline laadimine eeldab 300 kW+ laadijat, mida on Eestis vähe. Lätis, Leedus ja Soomes on neid rohkem.</p></div>
+    <div class="tip"><h3>Veljed ja rehvid</h3><p>19–20" veljed on talveks parimad. 22" vähendab ulatust (EX60 näide) ja on lumes halvem. Naastrehvid tõstavad tarbimist ~5–8%.</p></div>
+    <div class="tip"><h3>Eelkliima kodus</h3><p>Soojenda auto ette, kui see on laadijas. Nii tuleb soojus võrgust, mitte akust. Kõigil autodel on 11 kW AC-laadimine.</p></div>
+    <div class="tip"><h3>Sool ja konarused</h3><p>E-auto pidurikettad roostetavad, sest regeneratsioon teeb suurema osa pidurdamisest. Model Y TÜV-tulemus (vedrustus, pidurid) on Eesti teedel eriti oluline.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="h-tax">
+  <div><span class="eyebrow">Maksud 2026</span><h2 id="h-tax">Automaks ja registreerimistasu</h2></div>
+  <div class="tbox">
+    <table>
+      <thead><tr><th scope="col">Osa</th><th scope="col">Elektriauto</th><th scope="col">Mida see selle klassi autodele tähendab</th></tr></thead>
+      <tbody>
+        <tr><td>Aastamaks</td><td>CO₂-osa puudub. Baasosa + täismassiosa üle 2400 kg.</td><td>Kõigi selle klassi autode täismass on üle 2400 kg, seega massiosa tuleb maksta. Näide: <b>Škoda Enyaq 85x 190 €/a</b> (skoda.ee). Raskemad iX3, GLC ja EX60 P12 maksavad rohkem.</td></tr>
+        <tr><td>Registreerimistasu</td><td>CO₂-osa puudub, massiosa algab 2400 kg-st</td><td>Näide: <b>Enyaq 85x 850 €</b> (skoda.ee). Model Y ~384 € (edasimüüja andmetel).</td></tr>
+        <tr><td>Pered</td><td>Kuni 100 € lapse kohta aastas</td><td>Kehtib kõigile autodele</td></tr>
+        <tr><td>Poliitiline risk</td><td>Isamaa lubab maksu kaotada alates 1.01.2027</td><td>See on valimislubadus. Seni on Riigikogu eelnõud tagasi lükanud.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Täpse summa arvutad EMTA kalkulaatoriga, kasutades auto täismassi (registreerimistunnistuse väli F.2).</p>
+</section>
+
+<section aria-labelledby="h-buy">
+  <div><span class="eyebrow">Otsus</span><h2 id="h-buy">Kes millise auto peaks valima</h2></div>
+  <div class="tbox">
+    <table>
+      <thead><tr><th scope="col">Kui sinu jaoks on kõige tähtsam…</th><th scope="col">Vali</th><th scope="col">Hind EE</th></tr></thead>
+      <tbody>
+        <tr><td>Talvine ulatus ja palju maanteesõitu</td><td><b>BMW iX3 50 xDrive</b></td><td class="n">71 600 €</td></tr>
+        <tr><td>Mugavus, vaikus, kvaliteet</td><td><b>Mercedes GLC 400</b> või <b>Volvo EX60 P10</b></td><td class="n">76 880 € / 68 350 €</td></tr>
+        <tr><td>Suurim ulatus ja kiireim laadimine Euroopa reisidel</td><td><b>Volvo EX60 P12 AWD</b></td><td class="n">74 550 €</td></tr>
+        <tr><td>Hind koos tõestatud talvise efektiivsusega</td><td><b>Tesla Model Y LR AWD</b></td><td class="n">~51 900 €</td></tr>
+        <tr><td>Alla 55 000 € ja mitte Tesla</td><td><b>Škoda Enyaq 85x</b></td><td class="n">52 860 €</td></tr>
+        <tr><td>Odav linnasõit, harva pikad otsad</td><td>Kia EV6 / Hyundai Ioniq 5 (talvel suur kadu)</td><td class="n">41 790 € / 42 999 €</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Ei soovita Eesti talveks: BYD Sealion 7, mis jäi ADAC-i talvetestis viimaseks (293 km 91 kWh akuga).</p>
+</section>
+
+<section aria-labelledby="h-src">
+  <div><span class="eyebrow">Allikad</span><h2 id="h-src">Kust andmed pärinevad</h2></div>
+  <ol class="srcs">
+    <li><a href="https://www.volvocars.com/et-ee/cars/ex60-electric/specifications/">Volvo Eesti, EX60 hinnad</a></li>
+    <li><a href="https://specialbmw.inchcape.ee/uus-bmw-ix3/">Inchcape BMW Eesti, uus iX3</a></li>
+    <li><a href="https://www.bmw.ee/et/all-models/X-mudelid/ix3/bmw-ix3.html">BMW Eesti, iX3</a></li>
+    <li><a href="https://veho.ee/soiduautod/kampaaniad/electric-glc/">Veho, elektriline GLC 400</a></li>
+    <li><a href="https://www.mercedes-benz.ee/offers/glc-electric/">Mercedes-Benz Eesti, GLC electric</a></li>
+    <li><a href="https://www.audi.ee/ee/web/et/tools/layer/mudelite_hinnakirjad.html">Audi Eesti hinnakirjad</a></li>
+    <li><a href="https://www.audi.ee/ee/web/et/laoautod/laoautod-q6-e-tron.html">Audi Q6 laoautod</a></li>
+    <li><a href="https://infoauto.polestarimporter.com/stock-cars">Info-Auto, Polestar</a></li>
+    <li><a href="https://liikleja.ee/uudis/paevakajaline/polestari-esindus-tallinnas-on-avatud-tuleb-ka-polestar-3/">Liikleja, Polestar Tallinnas</a></li>
+    <li><a href="https://www.skoda.ee/autod/enyaq/enyaq/uus-enyaq-hinnakiri?_preservelanguage=1">Škoda Eesti, Enyaq hinnakiri</a></li>
+    <li><a href="https://www.kia.ee/models/e6_pe/prices">Kia Eesti, EV6 hinnad</a></li>
+    <li><a href="https://www.hyundai.ee/mudelid/ioniq-5/">Hyundai Eesti, Ioniq 5</a></li>
+    <li><a href="https://www.tesla.com/et_ee/findus/list/stores/Estonia">Tesla esindused Eestis</a></li>
+    <li><a href="https://www.autotalli.com/uusi-auto/243301/tesla/model-y/premium-long-range-all-wheel-drive">Model Y Premium AWD Soomes</a></li>
+    <li><a href="https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/auto/vergleichstest-bmw-ix3-mercedes-glc-eq-volvo-ex60-tesla-model-y/">ADAC võrdlustest</a></li>
+    <li><a href="https://www.bimmertoday.de/2026/10/30/adac-vergleich-bmw-ix3-schlagt-glc-ex60-bei-effizienz-reichweite/">ADAC testi kokkuvõte (bimmertoday)</a></li>
+    <li><a href="https://www.adac.de/rund-ums-fahrzeug/elektromobilitaet/elektroauto/elektroauto-reichweite-im-winter-adac-test-2026/">ADAC talvine stresstest 2026</a></li>
+    <li><a href="https://www.naf.no/elbil/elprix-nytt/elprix-vinter-2026-rekkeviddetest">NAF El Prix talv 2026, ulatus</a></li>
+    <li><a href="https://www.naf.no/elbil/elprix-nytt/elprix-vinter-2026-ladetest">NAF El Prix talv 2026, laadimine</a></li>
+    <li><a href="https://www.32cars.ru/en/posts/id33998-bmw-ix3-wins-naf-2026-summer-ev-range-test-with-781-km">NAF suvi 2026, iX3 781 km</a></li>
+    <li><a href="https://www.tek.no/test/i/RjO6gA/mercedes-benz-glc-2026">Tek.no, GLC test</a></li>
+    <li><a href="https://www.bmwblog.com/2026/09/02/bmw-ix3-real-world-range-test-vs-glc-model-y-ex60/">What Car? reaaltest (BMWBlog)</a></li>
+    <li><a href="https://insideevs.com/news/809214/ix3-glc-ex60-highway-range/">Kiirteetest iX3/GLC/EX60</a></li>
+    <li><a href="https://newmobility.news/en/2026/05/06/is-the-bmw-ix3-the-new-champion-in-long-distance-driving/">Bjørn Nyland, iX3</a></li>
+    <li><a href="https://www.adac.de/news/tuev-report/">TÜV Report 2026</a></li>
+    <li><a href="https://fin.ee/uudised/2026-aastal-joustuvad-seadusemuudatused">Rahandusministeerium, 2026. aasta muudatused</a></li>
+    <li><a href="https://lounaeestlane.ee/isamaa-reformierakond-sotsid-ja-eesti-200-keelduvad-automaksu-tuhistamast/">Automaksu kaotamise eelnõu</a></li>
+  </ol>
+</section>
+
+<footer>Koostatud 31.10.2026. Hinnad on käibemaksuga ja muutuvad. Enne ostu küsi edasimüüjalt kirjalik pakkumine. Kampaaniahinnad (Kia, Polestar, Mercedes) on ajutised.</footer>
+</div>
+
+<script>
+(function(){
+  // Winter range chart: [name, sub, min, max, measured?]
+  var W=[
+    ["BMW iX3 50 xDrive","71 600 €",430,490],
+    ["Volvo EX60 P12 AWD","74 550 €",430,480],
+    ["Mercedes GLC 400","76 880 €",370,420],
+    ["Audi Q6 e-tron quattro","alates 63 700 €",350,400],
+    ["Volvo EX60 P10 AWD","68 350 €",340,390],
+    ["Polestar 4 LR","55 850 €",310,360],
+    ["Tesla Model Y LR AWD","~51 900 € · NAF mõõdetud 359",330,370],
+    ["Škoda Enyaq 85x","52 860 €",290,330],
+    ["Kia EV6 / Ioniq 5 (63 kWh)","41 790–42 999 €",200,250]
+  ];
+  var MAX=500, el=document.getElementById("winter"), h="";
+  W.forEach(function(r){
+    h+='<div class="row"><div class="lbl">'+r[0]+'<small>'+r[1]+'</small></div><div class="track" role="img" aria-label="'+r[0]+': '+r[2]+' kuni '+r[3]+' km"><div class="bar" style="left:'+(r[2]/MAX*100)+'%;width:'+((r[3]-r[2])/MAX*100)+'%"><span>'+r[2]+'–'+r[3]+' km</span></div></div></div>';
+  });
+  h+='<div class="axis"><span></span><div class="ticks"><span>0</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500 km</span></div></div>';
+  el.innerHTML=h;
+
+  function mini(id,data,max,unit,lowBest,ticks){
+    var best=data.reduce(function(a,b){return (lowBest?b[1]<a[1]:b[1]>a[1])?b:a});
+    var s="";
+    data.forEach(function(d){
+      s+='<div class="row"><div class="lbl">'+d[0]+'</div><div class="track" role="img" aria-label="'+d[0]+': '+d[1]+' '+unit+'"><div class="bar meas'+(d===best?' best':'')+'" style="left:0;width:'+(d[1]/max*100)+'%"><span>'+String(d[1]).replace(".",",")+'</span></div></div></div>';
+    });
+    s+='<div class="axis"><span></span><div class="ticks">'+ticks.map(function(t){return '<span>'+t+'</span>'}).join("")+'</div></div>';
+    document.getElementById(id).innerHTML=s;
+  }
+  mini("m-cons",[["BMW iX3",18.3],["Tesla Y Perf.",20.2],["Mercedes GLC",20.4],["Volvo EX60",20.8]],25,"kWh/100 km",true,[0,5,10,15,20,25]);
+  mini("m-range",[["BMW iX3",669],["Mercedes GLC",559],["Volvo EX60",508],["Tesla Y Perf.",443]],750,"km",false,[0,150,300,450,600,750]);
+  mini("m-chg",[["Volvo EX60",17],["Mercedes GLC",23],["BMW iX3",25],["Tesla Y Perf.",35]],50,"min",true,[0,10,20,30,40,50]);
+
+  // sortable main table
+  var t=document.getElementById("cmp"), tb=t.tBodies[0];
+  t.querySelectorAll("th button").forEach(function(b){
+    b.addEventListener("click",function(){
+      var k=+b.dataset.k, num=b.hasAttribute("data-num"), th=b.parentNode;
+      var dir=th.getAttribute("aria-sort")==="ascending"?"descending":"ascending";
+      t.querySelectorAll("th").forEach(function(x){x.removeAttribute("aria-sort")});
+      th.setAttribute("aria-sort",dir);
+      var rows=[].slice.call(tb.rows);
+      rows.sort(function(a,c){
+        var x=a.cells[k], y=c.cells[k];
+        var va=num?+x.dataset.v:x.textContent.trim(), vb=num?+y.dataset.v:y.textContent.trim();
+        var r=num?va-vb:va.localeCompare(vb,"et");
+        return dir==="ascending"?r:-r;
+      });
+      rows.forEach(function(r){tb.appendChild(r)});
+    });
+  });
+})();
+</script>

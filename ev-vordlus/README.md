@@ -4,7 +4,24 @@
 **Allikad:** Euroopa sõltumatud testid: ADAC (DE), NAF/Motor El Prix (NO), What Car? (UK), Bjørn Nyland (NO), TÜV Report (DE), DECO Proteste (PT), Electrifying (UK), Car Magazine (UK), Autocar (UK) ja Edmunds (US) võrdluseks.
 **Eesti eripära:** talvine sõit −5…−25 °C, pikad maanteesõidud 90–110 km/h, laadimisvõrk enamasti 50–150 kW (üksikud kuni 300+ kW), automaks arvestab täismassi.
 
-> ⚠️ **Hinnad on suunavad.** Ametlikku Eesti hinnakirja leidsin ainult Tesla puhul (edasimüüja kuulutus). Teiste autode puhul on toodud Saksamaa/Soome/Itaalia hinnad, mis on Eesti hindadele lähedased, kuid mitte samad. Enne otsust küsi edasimüüjalt pakkumine.
+> **Visuaalne versioon:** [index.html](index.html) on sorteeritava tabeli ja graafikutega.
+
+### Eesti ametlikud hinnad (oktoober 2026, käibemaksuga)
+
+| Auto | Hind alates | Allikas |
+|---|---|---|
+| Kia EV6 63 kWh RWD | 41 790 € (kampaania, tavahind 47 790 €) | kia.ee |
+| Hyundai Ioniq 5 63 kWh | 42 999 € | hyundai.ee |
+| Tesla Model Y Long Range AWD | ~51 900 € + reg.-tasu ~384 € | Tallinna edasimüüja; Tesla ametlikku EE hinda ei saanud kätte (Soomes Premium AWD 54 990 €) |
+| Škoda Enyaq 85x Selection | 52 860 € (SportLine 57 380 €) | skoda.ee hinnakiri 20.07.2026 |
+| Polestar 4 LR Single Motor | 55 850 € soodustusega (ilma 59 850 €) | Info-Auto |
+| Audi Q6 e-tron | 63 700 € (Sportback 67 800 €, quattro laoautod 80 050 €+) | audi.ee |
+| Volvo EX60 P6 / P10 AWD / P12 AWD | 65 250 € / 68 350 € / 74 550 € (Ultra ~+7 000 €) | volvocars.com/et-ee |
+| BMW iX3 50 xDrive | 71 600 € | Inchcape BMW Eesti |
+| Mercedes GLC 400 4MATIC | 76 880 € (tutvustusmudel 80 190 €) | Veho / mercedes-benz.ee |
+| Polestar 3 | ~85 000 € (Eestisse saabumine ebaselge) | Liikleja |
+
+Maksunäide (skoda.ee): Enyaq 85x aastamaks 190 €, registreerimistasu 850 €.
 
 ---
 
@@ -12,10 +29,10 @@
 
 | Koht | Auto | Miks | Peamine miinus |
 |---|---|---|---|
-| 🥇 | **BMW iX3 50 xDrive** | Kõige säästlikum (ADAC 18,3 kWh/100 km) ja suurima tegeliku sõiduulatusega. Võitis What Car? ning NAF-i suvetestis ulatuse, sõitis WLTP-st kaugemale. Talvel saab sellest kõige rohkem kilomeetreid. | Hind ~70–71 k€ (DE). ADAC üldhinne 1,9 (jagatud 2. koht). |
-| 🥈 | **Mercedes GLC 400 4MATIC EQ** | ADAC-i võrdlustesti **võitja** (1,8). Mugav, vaikne, hea kvaliteet. NAF-i suvetestis ületas WLTP-d (+3,4%). | Kõige kallim (~72,5 k€ DE). Sõiduulatus jääb iX3-le alla. |
-| 🥉 | **Volvo EX60 P10 AWD** | Kõige **kiirem laadija** (ADAC 10→80% **17 min**), kõige mugavam vedrustus (adaptiivne standardis). Skandinaavia auto: soojuspump standardis, külmas kuni 48% kiirem laadimine (tootja väide). | P10 ulatus jääb selgelt iX3-le ja GLC-le alla (ADAC 508 km). Suurem P12 on kallis. Sõltumatut talvetesti veel pole. |
-| 4 | **Tesla Model Y Long Range AWD** | **Parim hind** (~52 k€ Eestis), madalaim tarbimine ADAC-i talvetestis 0 °C juures, väikseim talvine WLTP-kadu ADAC-is (40%). Superchargerite võrk. | ADAC-i võrdlustesti **viimane** (Performance: 2,2). Laadimine aeglasem (35 min). **TÜV 2026: kõige halvem mängelquote** 2–3-aastaste autode seas (17,3%). |
+| 🥇 | **BMW iX3 50 xDrive** (71 600 €) | Kõige säästlikum (ADAC 18,3 kWh/100 km) ja suurima tegeliku sõiduulatusega. Võitis What Car? ning NAF-i suvetestis ulatuse, sõitis WLTP-st kaugemale. Talvel saab sellest kõige rohkem kilomeetreid. |  ADAC üldhinne 1,9 (jagatud 2. koht). |
+| 🥈 | **Mercedes GLC 400 4MATIC EQ** (76 880 €) | ADAC-i võrdlustesti **võitja** (1,8). Mugav, vaikne, hea kvaliteet. NAF-i suvetestis ületas WLTP-d (+3,4%). | Kõige kallim. Sõiduulatus jääb iX3-le alla. |
+| 🥉 | **Volvo EX60 P10 AWD** (68 350 €) | Kõige **kiirem laadija** (ADAC 10→80% **17 min**), kõige mugavam vedrustus (adaptiivne standardis). Skandinaavia auto: soojuspump standardis, külmas kuni 48% kiirem laadimine (tootja väide). | P10 ulatus jääb selgelt iX3-le ja GLC-le alla (ADAC 508 km). Suurem P12 on kallis. Sõltumatut talvetesti veel pole. |
+| 4 | **Tesla Model Y Long Range AWD** | **Parim hind** (~51 900 €), madalaim tarbimine ADAC-i talvetestis 0 °C juures, väikseim talvine WLTP-kadu ADAC-is (40%). Superchargerite võrk. | ADAC-i võrdlustesti **viimane** (Performance: 2,2). Laadimine aeglasem (35 min). **TÜV 2026: kõige halvem mängelquote** 2–3-aastaste autode seas (17,3%). |
 
 **Lühidalt:**
 - Kui eelarve lubab ja tähtsaim on talvine ulatus → **BMW iX3 50 xDrive**.
