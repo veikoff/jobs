@@ -12,7 +12,7 @@
 |---|---|---|
 | Kia EV6 63 kWh RWD | 41 790 € (kampaania, tavahind 47 790 €) | kia.ee |
 | Hyundai Ioniq 5 63 kWh | 42 999 € | hyundai.ee |
-| Tesla Model Y Long Range AWD | ~51 900 € + reg.-tasu ~384 € | Tallinna edasimüüja; Tesla ametlikku EE hinda ei saanud kätte (Soomes Premium AWD 54 990 €) |
+| Tesla Model Y tagavedu / Premium LR tagavedu / **Premium LR nelikvedu** / Performance | 40 990 € / 50 990 € / **53 990 €** / 62 990 € | tesla.com/et_ee (31.10.2026), tarne Q1 2027 |
 | Škoda Enyaq 85x Selection | 52 860 € (SportLine 57 380 €) | skoda.ee hinnakiri 20.07.2026 |
 | Polestar 4 LR Single Motor | 55 850 € soodustusega (ilma 59 850 €) | Info-Auto |
 | Audi Q6 e-tron | 63 700 € (Sportback 67 800 €, quattro laoautod 80 050 €+) | audi.ee |
@@ -32,7 +32,7 @@ Maksunäide (skoda.ee): Enyaq 85x aastamaks 190 €, registreerimistasu 850 €.
 | 🥇 | **BMW iX3 50 xDrive** (71 600 €) | Kõige säästlikum (ADAC 18,3 kWh/100 km) ja suurima tegeliku sõiduulatusega. Võitis What Car? ning NAF-i suvetestis ulatuse, sõitis WLTP-st kaugemale. Talvel saab sellest kõige rohkem kilomeetreid. |  ADAC üldhinne 1,9 (jagatud 2. koht). |
 | 🥈 | **Mercedes GLC 400 4MATIC EQ** (76 880 €) | ADAC-i võrdlustesti **võitja** (1,8). Mugav, vaikne, hea kvaliteet. NAF-i suvetestis ületas WLTP-d (+3,4%). | Kõige kallim. Sõiduulatus jääb iX3-le alla. |
 | 🥉 | **Volvo EX60 P10 AWD** (68 350 €) | Kõige **kiirem laadija** (ADAC 10→80% **17 min**), kõige mugavam vedrustus (adaptiivne standardis). Skandinaavia auto: soojuspump standardis, külmas kuni 48% kiirem laadimine (tootja väide). | P10 ulatus jääb selgelt iX3-le ja GLC-le alla (ADAC 508 km). Suurem P12 on kallis. Sõltumatut talvetesti veel pole. |
-| 4 | **Tesla Model Y Long Range AWD** | **Parim hind** (~51 900 €), madalaim tarbimine ADAC-i talvetestis 0 °C juures, väikseim talvine WLTP-kadu ADAC-is (40%). Superchargerite võrk. | ADAC-i võrdlustesti **viimane** (Performance: 2,2). Laadimine aeglasem (35 min). **TÜV 2026: kõige halvem mängelquote** 2–3-aastaste autode seas (17,3%). |
+| 4 | **Tesla Model Y Long Range AWD** | **Parim hind** (53 990 €, Premium LR AWD), madalaim tarbimine ADAC-i talvetestis 0 °C juures, väikseim talvine WLTP-kadu ADAC-is (40%). Superchargerite võrk. | ADAC-i võrdlustesti **viimane** (Performance: 2,2). Laadimine aeglasem (35 min). **TÜV 2026: kõige halvem mängelquote** 2–3-aastaste autode seas (17,3%). |
 
 **Lühidalt:**
 - Kui eelarve lubab ja tähtsaim on talvine ulatus → **BMW iX3 50 xDrive**.
